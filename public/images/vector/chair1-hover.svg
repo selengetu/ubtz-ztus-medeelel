@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="175" height="150" viewBox="0 0 175 150">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f88;
+        stroke: red;
+        stroke-width: 6px;
+      }
+    </style>
+  </defs>
+  <rect x="30" y="5" width="140" height="140" rx="40" ry="40" class="cls-1"/>
+  <ellipse cx="30" cy="75" rx="25" ry="65" class="cls-1"/>
+</svg>

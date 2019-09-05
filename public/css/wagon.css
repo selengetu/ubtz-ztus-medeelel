@@ -1,0 +1,297 @@
+.myCanvas {
+			margin: 2%;
+			height: 0;
+			width: 100%;
+			min-height: 180px;
+			padding-bottom: 23%;
+			position: relative;
+		}
+		.wagon {
+			width: 100%;
+			min-width: 600px;
+			max-width: 1600px;
+			min-height: 180px;
+			height: 100%;
+			position: absolute;
+		}
+		.wagon-start-container {
+			height: 0;
+			width: 7.5%;
+			float: left;
+			padding-bottom: 21.60%;
+			position: relative;
+		}
+		.wagon-start {
+			background-size: 100% 100%;
+			height: 100%;
+			width: 100%;
+			position: absolute;
+		}
+		.wagon-start-kupe {
+			background-image: url('../images/vector/kupe1.svg');
+		}
+		.wagon-start-plat {
+			background-image: url('../images/vector/plat1.svg');
+		}
+		.wagon-end-container {
+			height: 0;
+			width: 3.4%;
+			float: left;
+			padding-bottom: 21.60%;
+			position: relative;
+		}
+		.wagon-end {
+			background-size: 100% 100%;
+			height: 100%;
+			width: 100%;
+			position: absolute;
+		}
+		.wagon-end-kupe {
+			background-image: url('../images/vector/kupe3.svg');
+		}
+		.wagon-end-plat {
+			background-image: url('../images/vector/plat3.svg');
+		}
+		.wagon-room-container {
+			height: 0;
+			width: 9.9%;
+			float: left;
+			padding-bottom: 21.60%;
+			position: relative;
+		}
+		.wagon-room {
+			background-size: 100% 100%;
+			padding: 5.3% 3.3%;
+			height: 100%;
+			width: 100%;
+			position: absolute;
+		}
+		.wagon-room-kupe {
+			background-image: url('../images/vector/kupe2.svg');
+		}
+		.wagon-room-plat {
+			background-image: url('../images/vector/plat2.svg');
+		}
+		.wagon-side-kupe {
+			float: left;
+			height: 100%;
+			width: 50%;
+		}
+		.wagon-side-plat1 {
+			float: left;
+			height: 70%;
+			width: 50%;
+		}
+		.wagon-side-plat2 {
+			float: left;
+			height: 30%;
+			width: 100%;
+		}
+		.kupe-seat {
+			height: 45%;
+			width: 70%;
+			text-align: center;
+			font-weight: bold;
+			font-size: 1.2em;
+			border-bottom-left-radius: 100%30%;
+			border-bottom-right-radius: 100%30%;
+			border-top-left-radius: 100%30%;
+			border-top-right-radius: 100%30%;
+		}
+		.plat-seat1 {
+			height: 50%;
+			width: 70%;
+			text-align: center;
+			font-weight: bold;
+			font-size: 1.2em;
+			border-bottom-left-radius: 100%30%;
+			border-bottom-right-radius: 100%30%;
+			border-top-left-radius: 100%30%;
+			border-top-right-radius: 100%30%;
+		}
+		.plat-seat2 {
+			height: 50%;
+			width: 70%;
+			text-align: center;
+			font-weight: bold;
+			font-size: 1.2em;
+			border-bottom-left-radius: 30%100%;
+			border-bottom-right-radius: 30%100%;
+			border-top-left-radius: 30%100%;
+			border-top-right-radius: 30%100%;
+		}
+		.kupe-seat1 {
+			margin: -40% 0 0 20%;
+			z-index: 1;
+			position: relative;
+		}
+		.kupe-seat2 {
+			margin: 3% 0 0 3%;
+			z-index: 2;
+			position: relative;
+		}
+		.kupe-seat3 {
+			margin: -40% 20% 0 0;
+			z-index: 1;
+			position: relative;
+			float: right;
+		}
+		.kupe-seat4 {
+			margin: 3% 3% 0 0;
+			z-index: 2;
+			position: relative;
+			float: right;
+		}
+		.plat-seat-position1 {
+			margin: 3% 0 0 3%;
+			z-index: 2;
+			position: relative;
+		}
+		.plat-seat-position2 {
+			margin: -5% 3% 0 0;
+			z-index: 2;
+			position: relative;
+			float: right;
+		}
+		.wagon-side-kupe .seat-active {
+			background-color: white;
+			color: red;
+			border: 2px solid red;
+		}
+		.wagon-side-kupe .seat-inactive {
+			background-color: lightgray;
+			color: white;
+			border: 2px solid darkgray;
+			pointer-events: none;
+			cursor: default;
+		}
+		.wagon-side-kupe .seat-active:hover {
+			background-color: #FF8888;
+			color: white;
+		}
+		.wagon-side-kupe .seat-active:active {
+			background-color: red;
+			color: white;
+		}
+		.wagon-side-kupe .seat-activated {
+			background-color: red;
+			border: 2px solid red;
+			color: white;
+		}
+		.wagon-room-plat .seat-active {
+			background-color: white;
+			color: red;
+			border: 2px solid red;
+		}
+		.wagon-room-plat .seat-inactive {
+			background-color: lightgray;
+			color: white;
+			border: 2px solid darkgray;
+			pointer-events: none;
+			cursor: default;
+		}
+		.wagon-room-plat .seat-active:hover {
+			background-color: #FF8888;
+			color: white;
+		}
+		.wagon-room-plat .seat-active:active {
+			background-color: red;
+			color: white;
+		}
+		.wagon-room-plat .seat-activated {
+			background-color: red;
+			border: 2px solid red;
+			color: white;
+		}
+		.obsh-container1 {
+			width: 70%;
+			height: 0;
+			padding-bottom: 75%;
+			position: relative;
+		}
+		.obsh-container2 {
+			width: 70%;
+			height: 0;
+			padding-bottom: 75%;
+			position: relative;
+			float: right;
+		}
+		.obsh-container3 {
+			margin-top: 10%;
+			padding-top: 12%;
+			width: 0;
+			height: 65%;
+			padding-right: 33%;
+			position: relative;
+			float: left;
+		}
+		.obsh {
+			border: none;
+			background-color: transparent;
+			background-size: 100% 100%;
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			font-size: 1.1em;
+		}
+
+		.obsh-container1 .seat-active {
+			background-image: url('../images/vector/chair1-active.svg');
+			color: red;
+		}
+		.obsh-container1 .seat-inactive {
+			background-image: url('../images/vector/chair1-inactive.svg');
+			color: white;
+		}
+		.obsh-container1 .seat-active:hover {
+			background-image: url('../images/vector/chair1-hover.svg');
+			color: white;
+		}
+		.obsh-container1 .seat-active:active {
+			background-image: url('../images/vector/chair1-selected.svg');
+			color: white;
+		}
+		.obsh-container1 .seat-activated {
+			background-image: url('../images/vector/chair1-selected.svg');
+			color: white;
+		}
+		.obsh-container2 .seat-active {
+			background-image: url('../images/vector/chair2-active.svg');
+			color: red;
+		}
+		.obsh-container2 .seat-inactive {
+			background-image: url('../images/vector/chair2-inactive.svg');
+			color: white;
+		}
+		.obsh-container2 .seat-active:hover {
+			background-image: url('../images/vector/chair2-hover.svg');
+			color: white;
+		}
+		.obsh-container2 .seat-active:active {
+			background-image: url('../images/vector/chair2-selected.svg');
+			color: white;
+		}
+		.obsh-container2 .seat-activated {
+			background-image: url('../images/vector/chair2-selected.svg');
+			color: white;
+		}
+		.obsh-container3 .seat-active {
+			background-image: url('../images/vector/chair3-active.svg');
+			color: red;
+		}
+		.obsh-container3 .seat-inactive {
+			background-image: url('../images/vector/chair3-inactive.svg');
+			color: white;
+		}
+		.obsh-container3 .seat-active:hover {
+			background-image: url('../images/vector/chair3-hover.svg');
+			color: white;
+		}
+		.obsh-container3 .seat-active:active {
+			background-image: url('../images/vector/chair3-selected.svg');
+			color: white;
+		}
+		.obsh-container3 .seat-activated {
+			background-image: url('../images/vector/chair3-selected.svg');
+			color: white;
+		}

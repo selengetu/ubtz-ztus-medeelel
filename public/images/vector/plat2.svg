@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="600" height="1300" viewBox="0 0 600 1300">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #a1a1a1;
+        stroke: #a1a1a1;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        stroke-width: 1px;
+      }
+
+      .cls-2 {
+        fill: #6dcff6;
+        stroke: #6dcff6;
+      }
+
+      .cls-3, .cls-4 {
+        fill: #959595;
+        stroke: #959595;
+      }
+
+      .cls-3 {
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <rect x="10" y="1275" width="580" height="5" class="cls-1"/>
+  <rect y="720" width="10" height="5" class="cls-1"/>
+  <rect x="590" y="720" width="10" height="5" class="cls-1"/>
+  <rect y="975" width="10" height="5" class="cls-1"/>
+  <rect x="590" y="975" width="10" height="5" class="cls-1"/>
+  <rect y="1295" width="600" height="5" class="cls-1"/>
+  <rect x="150" y="1275" width="300" height="25" class="cls-2"/>
+  <rect x="10" y="25" width="5" height="700" class="cls-1"/>
+  <rect x="10" y="975" width="5" height="300" class="cls-1"/>
+  <rect x="585" y="975" width="5" height="300" class="cls-1"/>
+  <rect x="585" y="25" width="5" height="700" class="cls-1"/>
+  <path d="M300.000,25.000 C322.091,25.000 340.000,42.909 340.000,65.000 L340.000,195.000 C340.000,217.091 322.091,235.000 300.000,235.000 C277.909,235.000 260.000,217.091 260.000,195.000 L260.000,65.000 C260.000,42.909 277.909,25.000 300.000,25.000 Z" class="cls-3"/>
+  <rect x="260" y="25" width="80" height="80" class="cls-4"/>
+  <rect x="10" y="20" width="580" height="5" class="cls-1"/>
+  <rect width="600" height="5" class="cls-1"/>
+  <rect x="150" width="300" height="25" class="cls-2"/>
+</svg>

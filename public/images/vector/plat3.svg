@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="200" height="1300" viewBox="0 0 200 1300">
+  <defs>
+    <style>
+      .cls-1, .cls-2, .cls-4 {
+        fill: #a1a1a1;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #a1a1a1;
+        stroke-width: 1px;
+      }
+
+      .cls-1 {
+        fill-rule: evenodd;
+      }
+
+      .cls-3, .cls-4 {
+        font-size: 150px;
+      }
+
+      .cls-4 {
+        font-family: "Arial";
+      }
+    </style>
+  </defs>
+  <path d="M165.000,0.093 C165.000,0.093 183.619,-1.475 192.900,8.072 C201.531,16.951 199.875,35.000 199.875,35.000 L194.893,35.000 C194.893,35.000 196.287,19.678 188.915,12.061 C180.872,3.751 165.000,5.080 165.000,5.080 L165.000,0.093 Z" class="cls-1"/>
+  <path d="M199.906,1265.000 C199.906,1265.000 201.475,1283.619 191.928,1292.900 C183.049,1301.531 165.000,1299.875 165.000,1299.875 L165.000,1294.893 C165.000,1294.893 180.321,1296.287 187.939,1288.915 C196.249,1280.871 194.920,1265.000 194.920,1265.000 L199.906,1265.000 Z" class="cls-1"/>
+  <rect x="195" y="35" width="5" height="1230" class="cls-2"/>
+  <rect x="10" y="975" width="5" height="300" class="cls-2"/>
+  <rect y="720" width="195" height="5" class="cls-2"/>
+  <rect width="165" height="5" class="cls-2"/>
+  <rect y="1295" width="165" height="5" class="cls-2"/>
+  <rect x="10" y="1275" width="185" height="5" class="cls-2"/>
+  <text transform="matrix(0, -1, 1, 0, 153, 636)" class="cls-3"><tspan class="cls-4">WC</tspan></text>
+  <rect y="975" width="10" height="5" class="cls-2"/>
+</svg>
