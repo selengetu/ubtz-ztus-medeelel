@@ -67,23 +67,49 @@ class HomeController extends Controller
         else {
             Session::put('pdate1', $date);
         }
-
-        $voyages = DB::select("select t.voyage_id, t.train_no, t.train_name_mn from VOYAGESCHEMA t where to_char(t.plan_date,'YYYY-MM-DD')='$date'");
         $voyage = 0;
+        $wagon = 0;
         if(Session::has('voyage')) {
             $voyage = Session::get('voyage');
         }
         else {
             Session::put('voyage', $voyage);
         }
+        $voyages = DB::select("select t.voyage_id, t.train_no, t.train_name_mn from VOYAGESCHEMA t where to_char(t.plan_date,'YYYY-MM-DD')='$date'");
+        $wagons = DB::select("select t.vwagon_id, t.wagon_name from VOYAGEWAGON t where t.voyage_id='$voyage' order by wagon_name");
 
-        $bindings = [
-            'preporttype' => 1,
-            'p_voyageid'  => $voyage,
-        ];
+
+        if(Session::has('wagon')) {
+
+            if(Session::get('wagon') == 0) {
+                $bindings = [
+                    'preporttype' => 1,
+                    'p_voyageid'  => $voyage,
+                ];
+                $t = 1;
+                Session::put('wagon', $wagon);
+            }
+            elseif(Session::get('wagon') != 0) {
+                $wagon = Session::get('wagon');
+                $bindings = [
+                    'preporttype' => 2,
+                    'p_voyageid'  => $wagon,
+                ];
+                $t = 2;
+                Session::put('wagon', $wagon);
+            }
+            }
+            else{
+                $bindings = [
+                    'preporttype' => 1,
+                    'p_voyageid'  => $voyage,
+                ];
+                $t = 1;
+                Session::put('wagon', $wagon);
+    }
 
         $rep = DB::executeProcedureWithCursor('rep_vchd', $bindings);
-        return view('rep_vchd', compact('rep','date','voyages','voyage'));
+        return view('rep_vchd', compact('rep','date','voyages','voyage','wagons','wagon','t'));
     }
 
     public function filter_rep_vchd_date($date) {
@@ -92,6 +118,10 @@ class HomeController extends Controller
     }
     public function filter_rep_vchd_voyage($voyage) {
         Session::put('voyage',$voyage);
+        return redirect('rep_vchd');
+    }
+    public function filter_rep_vchd_wagon($wagon) {
+        Session::put('wagon',$wagon);
         return redirect('rep_vchd');
     }
 }
