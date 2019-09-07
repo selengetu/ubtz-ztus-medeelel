@@ -24,7 +24,7 @@
         <!-- /.login-logo -->
         <div class="card">
             <div class="login-logo" style="margin-top: 1rem; margin-bottom: 0.5rem;">
-                <a href="/"><b>ЗТҮС</b> Кассир</a>
+                <a href="/"><b>ЗТҮС</b></a>
             </div>
             <div class="card-body login-card-body">
 

@@ -181,6 +181,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </p>
                             </a>
                         </li>
+                        @if(Auth::id() == 645)
                         <li class="nav-item has-treeview">
                             <a href="{{ route('rep_vchd') }}" class="nav-link">
                                 <i class="nav-icon fa fa-dashboard"></i>
@@ -189,6 +190,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </p>
                             </a>
                         </li>
+
+                            @endif
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

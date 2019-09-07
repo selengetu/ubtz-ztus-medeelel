@@ -18,6 +18,7 @@ Route::get('/filter_free_mest_date/{date}', 'HomeController@filter_free_mest_dat
 Route::get('/rep_vchd', 'HomeController@rep_vchd')->name('rep_vchd');
 Route::get('/filter_rep_vchd_voyage/{voyage}', 'HomeController@filter_rep_vchd_voyage');
 Route::get('/filter_rep_vchd_date/{date}', 'HomeController@filter_rep_vchd_date');
+Route::get('/filter_rep_vchd_wagon/{wagon}', 'HomeController@filter_rep_vchd_wagon');
 Route::get('collapsemenu/{val}', function($val){
     DB::update("update users set menucollapse = $val where id = ".Auth::user()->id);
 });
