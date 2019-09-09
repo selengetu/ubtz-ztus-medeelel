@@ -47,7 +47,7 @@
                     <div class="m-scrollable" data-scrollable="true" data-height="400" id="printableArea">
                         <div class="col-md-12">
                             <br>
-                            <h6 class="card-title" style="margin-left:35%;">Гал тэрэгний цай, цагаан хэрэглэлийн тайлан
+                            <h6 class="card-title" style="margin-left:35%;">Галт тэрэгний цай, цагаан хэрэглэлийн тайлан
                             </h6>
                             <span class="card-title" style="font-size:13px;">
 
@@ -161,6 +161,7 @@
             gettrain();
             $("#pdate1, #pdate2").change(function () {
                 gettrain();
+                $('#train_no').empty();
             });
             $("#voyage").change(function () {
                 getwagon();
