@@ -26,7 +26,7 @@
                 <div class="col-md-3">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"><span class="input-group-text">Вагон №</span></div>
-                        <?php $text = ''; ?>
+                        <?php $text1 = ''; ?>
                         <select class="form-control" id="wagon" name="wagon" onchange="javascript:location.href = 'filter_rep_vchd_wagon/'+this.value;">
                             <option value="0">Бүгд</option>
                             @foreach ($wagons as $wag)
@@ -52,6 +52,7 @@
                             <span class="card-title" style="font-size:13px;">
 
                             @if($text)<span class="cashername">Галт тэрэг: {{ $text }}</span><br>@endif
+                                @if($text1)<span class="vagonname">Вагон: {{ $text1 }}</span><br>@endif
                                 <span class="cashername">Галт тэрэг явах огноо: {{ $date }}</span>
                         </span>
                             <table class="table" style="table-layout: fixed;font-size:12px;text-align:center;">
