@@ -26,28 +26,67 @@ class HomeController extends Controller
     public function index()
     {
         $date = date('Y-m-d');
+        $date1 = date('Y-m-d');
         if(Session::has('pdate1')) {
             $date = Session::get('pdate1');
         }
         else {
             Session::put('pdate1', $date);
         }
+        if(Session::has('pdate2')) {
+            $date1 = Session::get('pdate2');
+        }
+        else {
+            Session::put('pdate2', $date1);
+        }
+        $voyages1 = DB::select("select t.voyage_id, t.train_no, t.train_name_mn from VOYAGESCHEMA t where to_char(t.plan_date,'YYYY-MM-DD')='$date1'");
+        $voyage1 = 0;
 
         $voyages = DB::select("select t.voyage_id, t.train_no, t.train_name_mn from VOYAGESCHEMA t where to_char(t.plan_date,'YYYY-MM-DD')='$date'");
         $voyage = 0;
+        $fr = 0;
+        $to = 0;
         if(Session::has('voyage')) {
             $voyage = Session::get('voyage');
         }
         else {
             Session::put('voyage', $voyage);
         }
+        if(Session::has('voyage1')) {
+            $voyage1 = Session::get('voyage1');
+        }
+        else {
+            Session::put('voyage1', $voyage1);
+        }
+        $frs = DB::select("select t.STOP_NAME, t.STATION_CODE , stop_posno from V_YOYAGE_STOPS t where t.VOYAGE_ID='$voyage1' order by stop_posno desc");
 
+        $tos = DB::select("select t.STOP_NAME, t.STATION_CODE , stop_posno from V_YOYAGE_STOPS t where t.VOYAGE_ID='$voyage1' order by stop_posno asc");
+
+        if(Session::has('fr')) {
+            $fr = Session::get('fr');
+        }
+        else {
+            Session::put('fr', $fr);
+        }
+        if(Session::has('to')) {
+            $to = Session::get('to');
+        }
+        else {
+            Session::put('to', $to);
+        }
         $bindings = [
             'p_voyageid'  => $voyage,
         ];
+        $bindings1 = [
+            'p_voyageid'  => $voyage1,
+            'pfromstcode'  => $fr,
+            'ptostcode'  => $to,
+        ];
 
         $rep = DB::executeProcedureWithCursor('rep_odb_free_mests', $bindings);
-        return view('home', compact('rep','date','voyages','voyage'));
+        $tar = DB::executeProcedureWithCursor('proc_get_voyage_fare', $bindings1);
+
+        return view('home', compact('rep','date1','date','voyages','voyage','voyages1','voyage1','tar','to','fr','tos','frs'));
     }
 
     public function filter_free_mest_date($date) {
@@ -56,6 +95,22 @@ class HomeController extends Controller
     }
     public function filter_free_mest_voyage($voyage) {
         Session::put('voyage',$voyage);
+        return redirect('home');
+    }
+    public function filter_tr_date($date2) {
+        Session::put('pdate2',$date2);
+        return redirect('home');
+    }
+    public function filter_tr_voyage($voyage1) {
+        Session::put('voyage1',$voyage1);
+        return redirect('home');
+    }
+    public function filter_tr_frstcode($fr) {
+    Session::put('fr',$fr);
+    return redirect('home');
+}
+    public function filter_tr_tostcode($to) {
+        Session::put('to',$to);
         return redirect('home');
     }
     public function rep_vchd()

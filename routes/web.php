@@ -13,7 +13,10 @@ Route::post('login', 'Auth\LoginController@login');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/filter_free_mest_voyage/{voyage}', 'HomeController@filter_free_mest_voyage');
 Route::get('/filter_free_mest_date/{date}', 'HomeController@filter_free_mest_date');
-
+Route::get('/filter_tr_voyage/{voyage}', 'HomeController@filter_tr_voyage');
+Route::get('/filter_tr_date/{date}', 'HomeController@filter_tr_date');
+Route::get('/filter_tr_frstcode/{st}', 'HomeController@filter_tr_frstcode');
+Route::get('/filter_tr_tostcode/{st}', 'HomeController@filter_tr_tostcode');
 
 Route::get('/rep_vchd', 'HomeController@rep_vchd')->name('rep_vchd');
 Route::get('/filter_rep_vchd_voyage/{voyage}', 'HomeController@filter_rep_vchd_voyage');
