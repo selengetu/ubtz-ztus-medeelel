@@ -93,13 +93,13 @@
                         <tbody>
                         @foreach ($tar as $i=>$item)
                             <tr>
-                                <td>{{ $item->dep_time }}</td>
-                                <td>{{ $item->train_no }}</td>
+                                <td>{{date('Y-m-d', strtotime($item->dep_time))}}</td>
+                                <td>{{ $item->train_no }} - {{ $item->wagon_name }} </td>
                                 <td>{{ $item->train_name_mn }}</td>
                                 <td>{{ $item->fromstcode}}-{{ $item->fromstname}}</td>
-                                <td>{{ $item->dep_time }}</td>
+                                <td>{{date('H:i', strtotime($item->dep_time))}}</td>
                                 <td>{{ $item->tostcode}} - {{$item->tostname}}</td>
-                                <td>{{ $item->arr_time}}</td>
+                                <td>{{date('H:i', strtotime($item->arr_time))}}</td>
                                 <td>{{ $item->km }}</td>
                                 <td>{{ $item->niitiin }}</td>
                                 <td>{{ $item->untlaga }}</td>
