@@ -13,11 +13,37 @@
             <div class="card-body p-0 text-center">
                 <br>
                 <div class="row">
+                    <div class="col-md-2">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend"><span class="input-group-text">Явах</span></div>
+                            <?php $text1 = ''; ?>
+                            <select class="form-control" id="fr" name="fr" onchange="javascript:location.href = 'filter_tr_frstcode/'+this.value;">
+                                @foreach ($frs as $frse)
+                                    <option value="{{ $frse->st_id }}" @if($frse->st_id==$fr) selected <?php $text1 = $frse->st_name_mon; ?> @endif>{{ $frse->st_name_mon }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend"><span class="input-group-text">Хүрэх</span></div>
+                            <?php $text2 = ''; ?>
+                            <select class="form-control" id="to" name="to" onchange="javascript:location.href = 'filter_tr_tostcode/'+this.value;">
+                                @foreach ($tos as $tose)
+                                    <option value="{{ $tose->st_id }}" @if($tose->st_id==$to) selected <?php $text2 = $tose->st_name_mon; ?> @endif>{{ $tose->st_name_mon }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-md-3">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend"><span class="input-group-text">Огноо /Эхлэх/ </span></div>
-                            <input class="custom-select" type="date" name='pdate2' id='pdate2' value="{{$date1}}"
-                                   onchange="javascript:location.href = 'filter_tr_date/'+this.value;" required>
+                            <?php $text3 = ''; ?>
+                            <select class="form-control" id="pdate2" name="pdate2" onchange="javascript:location.href = 'filter_tr_date/'+this.value;">
+                                @foreach ($dates as $datess)
+                                    <option value="{{ $datess->orderby }}" @if($datess->orderby ==$date1) selected <?php $text3 =$datess->orderby; ?> @endif>{{ $datess->orderby  }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -26,91 +52,53 @@
                             <?php $text5 = ''; ?>
                             <select class="form-control" id="voyage1" name="voyage1" onchange="javascript:location.href = 'filter_tr_voyage/'+this.value;">
                                 @foreach ($voyages1 as $item1)
-                                    <option value="{{ $item1->voyage_id }}" @if($item1->voyage_id==$voyage1) selected <?php $text5 = $item1->train_no.' '.$item1->train_name_mn; ?> @endif>{{ $item1->train_no }} {{ $item1->train_name_mn }}</option>
+                                    <option value="{{ $item1->voyage_id }}/{{ $item1->fvstop_id }}/{{ $item1->tvstop_id }}" @if($item1->voyage_id==$voyage1) selected <?php $text5 = $item1->train_no.' '.$item1->train_name_mn; ?> @endif>{{ $item1->train_no }} {{ $item1->train_name_mn }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend"><span class="input-group-text">Явах</span></div>
-                            <?php $text3 = ''; ?>
-                            <select class="form-control" id="fr" name="fr" onchange="javascript:location.href = 'filter_tr_frstcode/'+this.value;">
-                                @foreach ($frs as $frse)
-                                    <option value="{{ $frse->station_code }}" @if($frse->station_code==$fr) selected <?php $text3 = $frse->station_code.' '.$frse->stop_name; ?> @endif>{{$frse->station_code }} {{ $frse->stop_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend"><span class="input-group-text">Хүрэх</span></div>
-                            <?php $text4 = ''; ?>
-                            <select class="form-control" id="to" name="to" onchange="javascript:location.href = 'filter_tr_tostcode/'+this.value;">
-                                @foreach ($tos as $tose)
-                                    <option value="{{ $tose->station_code }}" @if($tose->station_code==$to) selected <?php $text3 = $tose->station_code.' '.$tose->stop_name; ?> @endif>{{$tose->station_code }} {{ $tose->stop_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+
                     <div class="col-md-1">
                         <button onclick="printDiv('printableArea')" class="btn btn-success"><i class="fa fa-print"> </i>
                             Хэвлэх</button>
                     </div>
                 </div>
-                <div class="m-scrollable" data-scrollable="true" data-height="400">
+
+                <div class="m-scrollable" data-scrollable="true" data-height="400" id="printableArea">
+                    <center>
+                        <b>
+                    ЧИГЛЭЛ: {{$text1}} - {{$text2}}
+                    <br>
+                    ОГНОО: {{$text3}}
+                    <br>
+                    Аялал: {{$text5}}
+                        </b>
+                    </center>
                     <table class="table table-striped table-bordered" style="font-size: 12px">
-                        <thead>
-                        <tr role="row">
-                            <th colspan="3">Гал тэрэг</th>
-                            <th colspan="2">Явах</th>
-                            <th colspan="2">Хүрэх</th>
-                            <th>Зай</th>
-                            <th colspan="5">Том хүн</th>
-                            <th colspan="5">Хүүхэд</th>
-                        </tr>
+                        <thead style="text-align:center; background-color: #c3ecd4; border-color: black">
                         <tr role="row">
                             <th>#</th>
-                            <th>№</th>
-                            <th>Аялал</th>
-                            <th>Код</th>
-                            <th>Цаг</th>
-                            <th>Код</th>
-                            <th>Цаг</th>
-                            <th>Км</th>
-                            <th>Нийтийн</th>
-                            <th>Унтлага</th>
-                            <th>Тасалгаат</th>
-                            <th>Ра-2 хатуу</th>
-                            <th>Ра-2 зөөлөн</th>
-                            <th>Нийтийн</th>
-                            <th>Унтлага</th>
-                            <th>Тасалгаат</th>
-                            <th>Ра-2 хатуу</th>
-                            <th>Ра-2 зөөлөн</th>
+                            <th>Төмөр зам</th>
+                            <th>Вагон төрөл</th>
+                            <th>Класс</th>
+                            <th>Хавсралт</th>
+                            <th>Том хүн</th>
+                            <th>Хүүхэд (5-12)</th>
+                            <th>Хүүхэд (0-12)</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($tar as $i=>$item)
                             <tr>
-                                <td>{{date('Y-m-d', strtotime($item->dep_time))}}</td>
-                                <td>{{ $item->train_no }} - {{ $item->wagon_name }} </td>
-                                <td>{{ $item->train_name_mn }}</td>
-                                <td>{{ $item->fromstcode}}-{{ $item->fromstname}}</td>
-                                <td>{{date('H:i', strtotime($item->dep_time))}}</td>
-                                <td>{{ $item->tostcode}} - {{$item->tostname}}</td>
-                                <td>{{date('H:i', strtotime($item->arr_time))}}</td>
-                                <td>{{ $item->km }}</td>
-                                <td>{{ $item->niitiin }}</td>
-                                <td>{{ $item->untlaga }}</td>
-                                <td>{{ $item->tasalgaat }}</td>
-                                <td>{{ $item->ra2_s }}</td>
-                                <td>{{ $item->ra2_h }}</td>
-                                <td>{{ $item->niitiin2 }}</td>
-                                <td>{{ $item->untlaga2 }}</td>
-                                <td>{{ $item->tasalgaat2 }}</td>
-                                <td>{{ $item->ra2_s2 }}</td>
-                                <td>{{ $item->ra2_h2 }}</td>
+                                <td>{{ $i+1 }}</td>
+                                <td>{{ $item->railway }} </td>
+                                <td>{{ $item->wagontype_name }}</td>
+                                <td>{{ $item->class_description }}</td>
+                                <td>{{ $item->appendix}}</td>
+                                <td>{{ $item->cost1}}</td>
+                                <td>{{ $item->cost2}}</td>
+                                <td>{{ $item->cost3}}</td>
+
                             </tr>
 
 
@@ -149,16 +137,16 @@
 
 
                     <div class="col-md-2">
-                        <button onclick="printDiv('printableArea')" class="btn btn-success"><i class="fa fa-print"> </i>
+                        <button onclick="printDiv('printableArea1')" class="btn btn-success"><i class="fa fa-print"> </i>
                             Хэвлэх</button>
                     </div>
                 </div>
 
                 <div class="row">
 
-                    <div class="col-md-12" id="printableArea">
-                        @if($text)<span class="cashername"><b>Галт тэрэг: {{ $text }}</b></span><br>@endif
-                        <span class="cashername"><b>Галт тэрэг явах огноо: {{ $date }}</b></span>
+                    <div class="col-md-12" id="printableArea1">
+                        @if($text)<span class="cashername"><b>ГАЛТ ТЭРЭГ: {{ $text }}</b></span><br>@endif
+                        <span class="cashername"><b>ГАЛТ ТЭРЭГ ЯВАХ ОГНОО: {{ $date }}</b></span>
                         </span>
                         <table class="table" style="table-layout: fixed;font-size:12px;text-align:center;">
                             <thead class="table table-bordered" style="text-align:center; background-color: #c3ecd4; border-color: black">
@@ -211,7 +199,7 @@
     <script>
         $(document).ready(function () {
             gettrain();
-            $("#pdate1, #pdate2").change(function () {
+            $("#pdate1").change(function () {
                 gettrain();
             });
 
