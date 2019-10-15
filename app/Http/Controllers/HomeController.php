@@ -40,7 +40,12 @@ class HomeController extends Controller
         $fvstop_id = 0;
         $tvstop_id = 0;
 
-
+        if(Session::has('pdate1')) {
+            $date = Session::get('pdate1');
+        }
+        else {
+            Session::put('pdate1', $date);
+        }
         if(Session::has('voyage')) {
             $voyage = Session::get('voyage');
         }
