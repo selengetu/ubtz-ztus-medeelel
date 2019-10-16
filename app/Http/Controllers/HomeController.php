@@ -33,7 +33,6 @@ class HomeController extends Controller
         $date1 =date('Y-m-d');
         $voyage1 = 0;
 
-        $voyages = DB::select("select t.voyage_id, t.train_no, t.train_name_mn from VOYAGESCHEMA t where to_char(t.plan_date,'YYYY-MM-DD')='$date'");
         $voyage = 0;
         $fr = 37;
         $to = 3;
@@ -52,6 +51,7 @@ class HomeController extends Controller
         else {
             Session::put('voyage', $voyage);
         }
+
         if(Session::has('voyage1')) {
             $voyage1 = Session::get('voyage1');
         }
@@ -94,15 +94,19 @@ class HomeController extends Controller
             'p_saleid' => 0,
         ];
 
+        $voyages = DB::select("select t.voyage_id, t.train_no, t.train_name_mn from VOYAGESCHEMA t where to_char(t.plan_date,'YYYY-MM-DD')='$date'");
+        if(sizeof($voyages)== 1) {
+            $first = $voyages[0]->voyage_id;
+            $voyage = $first;
+        }
+        else{
 
-        $bindings = [
-            'p_voyageid'  => $voyage,
-        ];
-
+        }
         $frs = DB::executeProcedureWithCursor('get_from_stations', $bind);
         $tos = DB::executeProcedureWithCursor('get_to_stations', $bind1);
         $dates = DB::executeProcedureWithCursor('proc_find_voyagedates', $bind2);
-        if(sizeof($dates)>0) {
+
+        if(sizeof($dates)> 0) {
             $first = $dates[0]->orderby;
             $found = false;
             if (Session::has('pdate2')) {
@@ -120,15 +124,14 @@ class HomeController extends Controller
         }
 
 
-        else {
 
-        }
         $bind3 = [
             'p_pos'  => 54,
             'p_fromstid'  => $fr,
             'p_tostid'  => $to,
             'p_plandate' => $date1,
         ];
+
         $voyages1 = DB::executeProcedureWithCursor('proc_find_voyage', $bind3);
 
         if(sizeof($voyages1)>0) {
@@ -140,9 +143,7 @@ class HomeController extends Controller
             $voyage1 = $first;
         }
         else{
-            $fvstop_id =[];
-            $tvstop_id =[];
-            $voyage1 =[];
+
         }
 
         $bindings1 = [
@@ -152,6 +153,17 @@ class HomeController extends Controller
             'p_tstop_id'  => $tvstop_id,
 
         ];
+        /* $bindings1 = [
+            'p_pos'  => 54,
+            'p_voyage_id'  => 6511,
+            'p_fstop_id'  => 98002,
+            'p_tstop_id'  => 98022,
+
+        ]; */
+        $bindings = [
+            'p_voyageid'  => $voyage,
+        ];
+
         $rep = DB::executeProcedureWithCursor('rep_odb_free_mests', $bindings);
         $tar = DB::executeProcedureWithCursor('proc_get_voyage_wagon_info', $bindings1);
 
