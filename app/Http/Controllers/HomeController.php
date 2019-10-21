@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
+use PDO;
 use Session;
 class HomeController extends Controller
 {
@@ -29,29 +30,14 @@ class HomeController extends Controller
         $bind = [
             'ppos'  => 54,
         ];
-        $date = date('Y-m-d');
         $date1 =date('Y-m-d');
         $voyage1 = 0;
-
-        $voyage = 0;
         $fr = 37;
         $to = 3;
         $fvstop_id = 0;
         $tvstop_id = 0;
-
-        if(Session::has('pdate1')) {
-            $date = Session::get('pdate1');
-        }
-        else {
-            Session::put('pdate1', $date);
-        }
-        if(Session::has('voyage')) {
-            $voyage = Session::get('voyage');
-        }
-        else {
-            Session::put('voyage', $voyage);
-        }
-
+        $wid = 0;
+        $cnt = 0;
         if(Session::has('voyage1')) {
             $voyage1 = Session::get('voyage1');
         }
@@ -83,6 +69,12 @@ class HomeController extends Controller
         else {
             Session::put('to', $to);
         }
+        if(Session::has('wid')) {
+            $wid = Session::get('wid');
+        }
+        else {
+            Session::put('wid', $wid);
+        }
         $bind1 = [
             'ppos'  => 54,
             'pfromst'  => $fr,
@@ -94,14 +86,6 @@ class HomeController extends Controller
             'p_saleid' => 0,
         ];
 
-        $voyages = DB::select("select t.voyage_id, t.train_no, t.train_name_mn from VOYAGESCHEMA t where to_char(t.plan_date,'YYYY-MM-DD')='$date'");
-        if(sizeof($voyages)== 1) {
-            $first = $voyages[0]->voyage_id;
-            $voyage = $first;
-        }
-        else{
-
-        }
         $frs = DB::executeProcedureWithCursor('get_from_stations', $bind);
         $tos = DB::executeProcedureWithCursor('get_to_stations', $bind1);
         $dates = DB::executeProcedureWithCursor('proc_find_voyagedates', $bind2);
@@ -122,7 +106,6 @@ class HomeController extends Controller
                 Session::put('pdate2', $date1);
             }
         }
-
 
 
         $bind3 = [
@@ -153,21 +136,40 @@ class HomeController extends Controller
             'p_tstop_id'  => $tvstop_id,
 
         ];
-        /* $bindings1 = [
-            'p_pos'  => 54,
-            'p_voyage_id'  => 6511,
-            'p_fstop_id'  => 98002,
-            'p_tstop_id'  => 98022,
 
-        ]; */
+
+        $tar = DB::executeProcedureWithCursor('proc_get_voyage_wagon_info', $bindings1);
         $bindings = [
-            'p_voyageid'  => $voyage,
+            'p_pos_id' => 54,
+            'p_vid'    => $voyage1,
+            'p_stop1'  => $fvstop_id,
+            'p_stop2'  => $tvstop_id,
+            'p_wtype'  => 0,
         ];
 
-        $rep = DB::executeProcedureWithCursor('rep_odb_free_mests', $bindings);
-        $tar = DB::executeProcedureWithCursor('proc_get_voyage_wagon_info', $bindings1);
+        $wagons = DB::executeProcedureWithCursor('proc_get_voyage_wagons', $bindings);
 
-        return view('home', compact('rep','date1','date','voyages','voyage','voyages1','voyage1','tar','to','fr','tos','frs','dates'));
+        $bindings3 = [
+            'p_uid'  => Auth::id(),
+            'p_pos'  => 54,
+            'p_saleid'  => 0,
+            'p_wid'  => $wid,
+            'p_stid1'  => $fvstop_id,
+            'p_stid2'  => $tvstop_id,
+            'p_mestno'  => 0,
+        ];
+        $array['vwagons'] = DB::executeProcedureWithCursor('proc_get_wagon_mests_casher', $bindings3);
+        $array['passenger_info'] = DB::select('select * from V_GET_WAGON_PASSENGER t where t.vwagon_id='.$wid);
+        $array['mestorders'] = DB::select("select w.wagon_name, substr(w.wagontype_name,0,4) wagontype_name, t.mest_no
+                                    from VOYAGEMEST_ORDER t, VOYAGEWAGON w
+                                    where t.sale_id=0
+                                    and t.mest_state=1
+                                    and t.vwagon_id=w.vwagon_id
+                                    order by w.wagon_posno, t.mest_no");
+
+
+        return view('home', compact('rep','date1','voyages1','voyage1','tar','to','fr','tos','frs','dates','wagons',
+            'stations', 'voyagesaleid', 'fst', 'tst', 'vdt', 'vid', 'wid', 'cnt', 'array'));
     }
 
     public function filter_free_mest_date($date) {
