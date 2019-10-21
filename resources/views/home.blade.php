@@ -50,9 +50,11 @@
                         <div class="input-group mb-3">
                             <div class="input-group-prepend"><span class="input-group-text">Аялал №</span></div>
                             <?php $text5 = ''; ?>
+                            <?php $text6 = ''; ?>
+                            <?php $text7 = ''; ?>
                             <select class="form-control" id="voyage1" name="voyage1" onchange="javascript:location.href = 'filter_tr_voyage/'+this.value;">
                                 @foreach ($voyages1 as $item1)
-                                    <option value="{{ $item1->voyage_id }}/{{ $item1->fvstop_id }}/{{ $item1->tvstop_id }}" @if($item1->voyage_id==$voyage1) selected <?php $text5 = $item1->train_no.' '.$item1->train_name_mn; ?> @endif>{{ $item1->train_no }} {{ $item1->train_name_mn }}</option>
+                                    <option value="{{ $item1->voyage_id }}/{{ $item1->fvstop_id }}/{{ $item1->tvstop_id }}" @if($item1->voyage_id==$voyage1) selected <?php $text5 = $item1->train_no.' '.$item1->train_name_mn; ?><?php $text6 = $item1->fvstop_id; ?><?php $text7 = $item1->tvstop_id; ?>  @endif>{{ $item1->train_no }} {{ $item1->train_name_mn }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -118,11 +120,11 @@
                 <div class="row" style="margin-top:-20px">
                     <div class="col" style="font-size:12px;">
                         <table id="wagonPercentagetable" class="table" >
-                            <tbody><tr id="wagonName"><td>Вагон</td>@foreach ($wagons as $i=>$item)<td><a onclick="changeWagon({{ $item->vwagon_id }})">{{ $item->wagon_name }} {{ $item->wagontype_name }}</a></td>@endforeach</tr>
+                            <tbody><tr id="wagonName"><td>Вагон</td>@foreach ($wagons as $i=>$item)<td><a onclick="changeWagon({{ $item->vwagon_id }})">{{ $item->wagon_name }} {{ $item->wagontype_name }}</a></td> @endforeach</tr>
                             <tr id="wagonPercentage"><td>Дүүргэлт</td>
                                 @foreach ($wagons as $i=>$item)
 
-                                    <td><div class="progress"><div class="progress-bar
+                                    <td><a onclick="changeWagon({{ $item->vwagon_id }})"><div class="progress"><div class="progress-bar
                                      @if(100*$item->filled/$item->totalmest<60)
                                                     bg-success
 
@@ -134,55 +136,19 @@
                                                     bg-danger
                     @endif
                                     progress-bar-success
-                                     progress-bar-striped" role="progressbar" aria-valuenow="{{100*$item->filled/$item->totalmest}}" aria-valuemin="0" aria-valuemax="100" style="width:{{100*$item->filled/$item->totalmest}}%">{{number_format(100*$item->filled/$item->totalmest)}}%  </div></div></td>
+                                     progress-bar-striped" role="progressbar" aria-valuenow="{{100*$item->filled/$item->totalmest}}" aria-valuemin="0" aria-valuemax="100" style="width:{{100*$item->filled/$item->totalmest}}%">{{number_format(100*$item->filled/$item->totalmest)}}%  </div></div></a></td>
                                 @endforeach</tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="row" style="margin-top:1rem;">
-                    <div class="col-9" style="padding-left:1rem;">
+                    <div class="col-12" style="padding-left:1rem;">
                         <div class="myCanvas table-responsive">
                             <div class="wagon" id="wagonMain"><div class="wagon-start-container"><div class="wagon-start wagon-start-kupe"></div></div><div class="wagon-room-container"><div class="wagon-room wagon-room-kupe"><div class="wagon-side-kupe"><button class="kupe-seat seat-inactive kupe-seat2" id="2">2</button><button class="kupe-seat seat-inactive kupe-seat1" id="1">1</button></div><div class="wagon-side-kupe"><button class="kupe-seat seat-inactive kupe-seat4" id="4" style="float: right;">4</button><button class="kupe-seat seat-inactive kupe-seat3" id="3" style="float: right;">3</button></div></div></div><div class="wagon-room-container"><div class="wagon-room wagon-room-kupe"><div class="wagon-side-kupe"><button class="kupe-seat seat-inactive kupe-seat2" id="6">6</button><button class="kupe-seat seat-inactive kupe-seat1" id="5">5</button></div><div class="wagon-side-kupe"><button class="kupe-seat seat-active kupe-seat4" id="8" style="float: right;">8</button><button class="kupe-seat seat-inactive kupe-seat3" id="7" style="float: right;">7</button></div></div></div><div class="wagon-room-container"><div class="wagon-room wagon-room-kupe"><div class="wagon-side-kupe"><button class="kupe-seat seat-activated kupe-seat2" id="10">10</button><button class="kupe-seat seat-inactive kupe-seat1" id="9">9</button></div><div class="wagon-side-kupe"><button class="kupe-seat seat-inactive kupe-seat4" id="12" style="float: right;">12</button><button class="kupe-seat seat-inactive kupe-seat3" id="11" style="float: right;">11</button></div></div></div><div class="wagon-room-container"><div class="wagon-room wagon-room-kupe"><div class="wagon-side-kupe"><button class="kupe-seat seat-inactive kupe-seat2" id="14">14</button><button class="kupe-seat seat-inactive kupe-seat1" id="13">13</button></div><div class="wagon-side-kupe"><button class="kupe-seat seat-inactive kupe-seat4" id="16" style="float: right;">16</button><button class="kupe-seat seat-inactive kupe-seat3" id="15" style="float: right;">15</button></div></div></div><div class="wagon-room-container"><div class="wagon-room wagon-room-kupe"><div class="wagon-side-kupe"><button class="kupe-seat seat-inactive kupe-seat2" id="18">18</button><button class="kupe-seat seat-inactive kupe-seat1" id="17">17</button></div><div class="wagon-side-kupe"><button class="kupe-seat seat-inactive kupe-seat4" id="20" style="float: right;">20</button><button class="kupe-seat seat-inactive kupe-seat3" id="19" style="float: right;">19</button></div></div></div><div class="wagon-room-container"><div class="wagon-room wagon-room-kupe"><div class="wagon-side-kupe"><button class="kupe-seat seat-inactive kupe-seat2" id="22">22</button><button class="kupe-seat seat-inactive kupe-seat1" id="21">21</button></div><div class="wagon-side-kupe"><button class="kupe-seat seat-inactive kupe-seat4" id="24" style="float: right;">24</button><button class="kupe-seat seat-inactive kupe-seat3" id="23" style="float: right;">23</button></div></div></div><div class="wagon-room-container"><div class="wagon-room wagon-room-kupe"><div class="wagon-side-kupe"><button class="kupe-seat seat-inactive kupe-seat2" id="26">26</button><button class="kupe-seat seat-inactive kupe-seat1" id="25">25</button></div><div class="wagon-side-kupe"><button class="kupe-seat seat-inactive kupe-seat4" id="28" style="float: right;">28</button><button class="kupe-seat seat-inactive kupe-seat3" id="27" style="float: right;">27</button></div></div></div><div class="wagon-room-container"><div class="wagon-room wagon-room-kupe"><div class="wagon-side-kupe"><button class="kupe-seat seat-inactive kupe-seat2" id="30">30</button><button class="kupe-seat seat-inactive kupe-seat1" id="29">29</button></div><div class="wagon-side-kupe"><button class="kupe-seat seat-inactive kupe-seat4" id="32" style="float: right;">32</button><button class="kupe-seat seat-inactive kupe-seat3" id="31" style="float: right;">31</button></div></div></div><div class="wagon-room-container"><div class="wagon-room wagon-room-kupe"><div class="wagon-side-kupe"><button class="kupe-seat seat-inactive kupe-seat2" id="34">34</button><button class="kupe-seat seat-inactive kupe-seat1" id="33">33</button></div><div class="wagon-side-kupe"><button class="kupe-seat seat-inactive kupe-seat4" id="36" style="float: right;">36</button><button class="kupe-seat seat-inactive kupe-seat3" id="35" style="float: right;">35</button></div></div></div><div class="wagon-end-container"><div class="wagon-end wagon-end-kupe"></div></div></div>
                         </div>
                     </div>
-                    <div class="col-3" style="padding-right:2rem;">
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <small class="form-text" style="font-weight:bold;">Суудлын дугаар</small>
-                                    <input type="number" id="mestno" name="mestno" class="form-control">
-                                    <div class="valid-feedback">
-                                        Looks good!
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Хамгийн багадаа 1 суудлын дугаар оруулна уу.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <small class="form-text" style="font-weight:bold;">Сонгогдсон суудлууд:
-                                        @if ($cnt>0)
-                                            <span style="font-weight:bold; font-size:16px; color:#E5B803;"> /{{ $cnt }} суудал сонгоно уу/</span>
-                                        @endif
-                                    </small>
-                                    <span style="font-weight:bold; font-size:24px; color:#E5B803;" id="checkedmest">Мест сонгоно уу...</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row pull-right">
-                            <div class="col">
-                                <button type="submit" class="btn btn-success" id="nextbtn" onclick="passenger()">Үргэлжлүүлэх</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12" style="padding-right:2rem;">
-                        <table id="passenger_info" class="table table-bordered">
-                        </table>
-                    </div>
+
                 </div>
                 <!-- /.card-body -->
             </div>
@@ -201,66 +167,14 @@
             window.print();
             document.body.innerHTML = originalContents;
         }
-        $('#voyage1').change(function() {
-            $('#pleaseWaitDialog').modal('show');
-            let vid = $('#voyage1').val();
-            $.each(voyages, function(i,row){
-                if (row.voyage_id==vid) {
-                    voyage = row;
-                }
-            });
-            if(voyage == null) {
-                alert('Алдаа гарлаа: Аялал олдсонгүй');
-                $('#pleaseWaitDialog').modal('hide');
-                return;
-            }
-            $('#wid').empty();
-            $('#wagonName').empty();
-            $('#wagonPercentage').empty();
-            let stop1 = voyage.fvstop_id;
-            let stop2 = voyage.tvstop_id;
-            $('#wagonName').append('<td>Вагон</td>');
-            $('#wagonPercentage').append('<td>Дүүргэлт</td>');
-            $.get('getvoyagewagons/'+vid+'/'+stop1+'/'+stop2).done(function (data) {
-                console.log(data);
-                /*lenght = 4;
-                if(lenght>data.blankcount) {
-                    lenght = data.blankcount;
-                }*/
-                let wagons = data.wagons;
-                if (wagons.length==0) {
-                    $('#pleaseWaitDialog').modal('hide');
-                    alert('Вагон олдсонгүй');
-                }
-                else {
-                    let wid = {{ $wid }};
-                    console.log('wid '+wid);
-                    let first = 0;
-                    let classname = '';
-                    $.each(wagons, function(i,wagon){
-                        if (i==0) first = wagon.vwagon_id;
-                        if(wid==wagon.vwagon_id) first = wagon.vwagon_id;
 
-                    $("#wid").val(first);
-                    $("#wid").trigger("change");
-                }
-                $('#pleaseWaitDialog').modal('hide');
-            });
-        });
+        function changeWagon(w) {
 
-        function changeWagon(wid) {
-            $('#wid').val(wid)
-            $('#wid').trigger('change')
-        }
-        //wagon onchange
-        $('#wid').change(function() {
-            $('#pleaseWaitDialog').modal('show');
-            $('#btype').empty();
-            $('#passenger_info ').empty();
-            let wid = $('#wid').val();
-            let stop1 = voyage.fvstop_id;
-            let stop2 = voyage.tvstop_id;
-
+            let wid = w;
+            let stop1 =  {{$text6}};
+            let stop2 =  {{$text7}};
+            console.log(stop1);
+console.log(stop2);
             console.log('getwagonmests/'+wid+'/'+stop1+'/'+stop2+'/'+voyagesaleid);
             $.get('getwagonmests/'+wid+'/'+stop1+'/'+stop2+'/'+voyagesaleid).done(function (data) {
                 mests=data.vwagons;
@@ -280,7 +194,9 @@
                 updateCheckedMest(data.mestorders)
                 $('#pleaseWaitDialog').modal('hide');
             });
-        });
+        }
+        //wagon onchange
+
         function drawMests() {
             let container = $('#wagonMain');
             container.empty();
