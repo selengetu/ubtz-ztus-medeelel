@@ -24,5 +24,16 @@ Route::get('/filter_rep_vchd_wagon/{wagon}', 'HomeController@filter_rep_vchd_wag
 Route::get('collapsemenu/{val}', function($val){
     DB::update("update users set menucollapse = $val where id = ".Auth::user()->id);
 });
-
-
+Route::get('/getwagonmests/{wid}/{stop1}/{stop2}/{voyagesaleid}', function($wid,$stop1,$stop2,$voyagesaleid){
+    Session::put('wid', $wid);
+    $bindings = [
+        'p_uid'  => Auth::id(),
+        'p_pos'  => Auth::user()->pos_id,
+        'p_saleid'  => $voyagesaleid,
+        'p_wid'  => $wid,
+        'p_stid1'  => $stop1,
+        'p_stid2'  => $stop2,
+        'p_mestno'  => 0,
+    ];
+    return $dt = DB::executeProcedureWithCursor('proc_get_wagon_mests_casher', $bindings);
+});

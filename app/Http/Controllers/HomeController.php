@@ -30,33 +30,11 @@ class HomeController extends Controller
         $bind = [
             'ppos'  => 54,
         ];
+        $frs = DB::executeProcedureWithCursor('get_from_stations', $bind);
         $date1 =date('Y-m-d');
-        $voyage1 = 0;
-        $fr = 37;
-        $to = 3;
-        $fvstop_id = 0;
-        $tvstop_id = 0;
-        $wid = 0;
-        $cnt = 0;
-        if(Session::has('voyage1')) {
-            $voyage1 = Session::get('voyage1');
-        }
-        else {
-            Session::put('voyage1', $voyage1);
-        }
-        if(Session::has('fvstop_id')) {
-            $fvstop_id = Session::get('fvstop_id');
-        }
-        else {
-            Session::put('fvstop_id', $fvstop_id);
-        }
-        if(Session::has('tvstop_id')) {
-            $tvstop_id = Session::get('tvstop_id');
-        }
-        else {
-            Session::put('tvstop_id', $tvstop_id);
-        }
 
+        $fr = 37;
+        $to = 19;
         if(Session::has('fr')) {
             $fr = Session::get('fr');
         }
@@ -69,29 +47,33 @@ class HomeController extends Controller
         else {
             Session::put('to', $to);
         }
-        if(Session::has('wid')) {
-            $wid = Session::get('wid');
-        }
-        else {
-            Session::put('wid', $wid);
-        }
+
         $bind1 = [
             'ppos'  => 54,
             'pfromst'  => $fr,
         ];
+        $tos = DB::executeProcedureWithCursor('get_to_stations', $bind1);
 
         $bind2 = [
             'p_fromstid'  => $fr,
             'p_tostid'  => $to,
             'p_saleid' => 0,
         ];
-
-        $frs = DB::executeProcedureWithCursor('get_from_stations', $bind);
-        $tos = DB::executeProcedureWithCursor('get_to_stations', $bind1);
         $dates = DB::executeProcedureWithCursor('proc_find_voyagedates', $bind2);
-
+        if(sizeof($dates)== 0) {
+            $fr = 37;
+            $to = 19;
+            $bind2 = [
+                'p_fromstid'  => $fr,
+                'p_tostid'  => $to,
+                'p_saleid' => 0,
+            ];
+            $dates = DB::executeProcedureWithCursor('proc_find_voyagedates', $bind2);
+        }
         if(sizeof($dates)> 0) {
+
             $first = $dates[0]->orderby;
+
             $found = false;
             if (Session::has('pdate2')) {
                 $date1 = Session::get('pdate2');
@@ -107,7 +89,6 @@ class HomeController extends Controller
             }
         }
 
-
         $bind3 = [
             'p_pos'  => 54,
             'p_fromstid'  => $fr,
@@ -118,15 +99,70 @@ class HomeController extends Controller
         $voyages1 = DB::executeProcedureWithCursor('proc_find_voyage', $bind3);
 
         if(sizeof($voyages1)>0) {
+
             $first = $voyages1[0]->voyage_id;
             $fvfirst = $voyages1[0]->fvstop_id;
             $tvfirst = $voyages1[0]->tvstop_id;
             $tvstop_id = $tvfirst;
             $fvstop_id = $fvfirst;
             $voyage1 = $first;
+
         }
         else{
 
+        }
+
+        $wid = 0;
+
+        if(Session::has('voyage1')) {
+            if(Session::get('voyage1') == 0) {
+
+                Session::put('voyage1', $voyage1);
+
+            }
+            else{
+                $voyage1 = Session::get('voyage1');
+            }
+
+        }
+
+        else {
+            Session::put('voyage1', $voyage1);
+        }
+
+        if(Session::has('fvstop_id')) {
+            if(Session::get('fvstop_id') == 0) {
+                Session::put('fvstop_id', $fvstop_id);
+            }
+            else{
+                $fvstop_id = Session::get('fvstop_id');
+            }
+
+        }
+
+        else {
+            Session::put('fvstop_id', $fvstop_id);
+        }
+        if(Session::has('tvstop_id')) {
+            if(Session::get('tvstop_id') == 0) {
+                Session::put('tvstop_id', $tvstop_id);
+            }
+            else{
+                $tvstop_id = Session::get('tvstop_id');
+            }
+
+        }
+
+        else {
+            Session::put('tvstop_id', $tvstop_id);
+        }
+
+
+        if(Session::has('wid')) {
+            $wid = Session::get('wid');
+        }
+        else {
+            Session::put('wid', $wid);
         }
 
         $bindings1 = [
@@ -136,7 +172,6 @@ class HomeController extends Controller
             'p_tstop_id'  => $tvstop_id,
 
         ];
-
 
         $tar = DB::executeProcedureWithCursor('proc_get_voyage_wagon_info', $bindings1);
         $bindings = [
@@ -148,28 +183,8 @@ class HomeController extends Controller
         ];
 
         $wagons = DB::executeProcedureWithCursor('proc_get_voyage_wagons', $bindings);
-
-        $bindings3 = [
-            'p_uid'  => Auth::id(),
-            'p_pos'  => 54,
-            'p_saleid'  => 0,
-            'p_wid'  => $wid,
-            'p_stid1'  => $fvstop_id,
-            'p_stid2'  => $tvstop_id,
-            'p_mestno'  => 0,
-        ];
-        $array['vwagons'] = DB::executeProcedureWithCursor('proc_get_wagon_mests_casher', $bindings3);
-        $array['passenger_info'] = DB::select('select * from V_GET_WAGON_PASSENGER t where t.vwagon_id='.$wid);
-        $array['mestorders'] = DB::select("select w.wagon_name, substr(w.wagontype_name,0,4) wagontype_name, t.mest_no
-                                    from VOYAGEMEST_ORDER t, VOYAGEWAGON w
-                                    where t.sale_id=0
-                                    and t.mest_state=1
-                                    and t.vwagon_id=w.vwagon_id
-                                    order by w.wagon_posno, t.mest_no");
-
-
-        return view('home', compact('rep','date1','voyages1','voyage1','tar','to','fr','tos','frs','dates','wagons',
-            'stations', 'voyagesaleid', 'fst', 'tst', 'vdt', 'vid', 'wid', 'cnt', 'array'));
+        return view('home', compact('rep','date1','voyages1','voyage1','tar','to','fr','tos','frs','dates','wagons','fvstop_id','tvstop_id',
+            'stations', 'voyagesaleid', 'wid'));
     }
 
     public function filter_free_mest_date($date) {

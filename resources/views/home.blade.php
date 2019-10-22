@@ -171,27 +171,15 @@
         function changeWagon(w) {
 
             let wid = w;
-            let stop1 =  {{$text6}};
-            let stop2 =  {{$text7}};
+            let stop1 =  {{$fvstop_id}};
+            let stop2 =  {{$tvstop_id}};
+            let voyagesaleid=  0;
             console.log(stop1);
-console.log(stop2);
+
             console.log('getwagonmests/'+wid+'/'+stop1+'/'+stop2+'/'+voyagesaleid);
             $.get('getwagonmests/'+wid+'/'+stop1+'/'+stop2+'/'+voyagesaleid).done(function (data) {
-                mests=data.vwagons;
-                passenger_info=data.passenger_info;
-                $.each(passenger_info, function(i,row){
-                    var mestless = '';
-                    if(row.traintype_code==4) {
-                        mestless = '<br> <button class="btn btn-warning btn-sm" onclick="mestlessModal('+row.passenger_id+','+row.mest_no+',\''+row.firstname+'\',\''+row.fromname+'\',\''+row.toname+'\');">Местгүй <i class="fa fa-child"></i></button>';
-                    }
-                    $('#passenger_info ').append('<td style="background-color:#E0E0E0;"> МЕСТ №: '+row.mest_no+mestless+'</td>'+
-                        '<td><i class="fa fa-user"> </i> .'+row.firstname+'<br>' +row.fromname.substr(0, 3)+' <i class="fa fa-arrow-right"> </i> ' +row.toname.substr(0, 3)+'</td>');
-                    if((i+1) % 6 == 0){
-                        $('#passenger_info ').append('</tr><tr>');
-                    }
-                });
+                console.log(data);
                 drawMests();
-                updateCheckedMest(data.mestorders)
                 $('#pleaseWaitDialog').modal('hide');
             });
         }
@@ -201,7 +189,7 @@ console.log(stop2);
             let container = $('#wagonMain');
             container.empty();
             //mestArray = [];
-            console.log(mests.length);
+            console.log(data.length);
             if (mests.length==36){
                 container.append("<div class='wagon-start-container'><div class='wagon-start wagon-start-kupe'></div></div>");
                 for (var i=0; i<9; i++){
