@@ -90,7 +90,7 @@ class HomeController extends Controller
         }
 
         $bind3 = [
-            'p_pos'  => 54,
+            'p_pos'  => 0,
             'p_fromstid'  => $fr,
             'p_tostid'  => $to,
             'p_plandate' => $date1,
@@ -120,12 +120,8 @@ class HomeController extends Controller
                 Session::put('voyage1', $voyage1);
 
             }
-            else{
-                $voyage1 = Session::get('voyage1');
-            }
 
         }
-
         else {
             Session::put('voyage1', $voyage1);
         }
@@ -133,9 +129,6 @@ class HomeController extends Controller
         if(Session::has('fvstop_id')) {
             if(Session::get('fvstop_id') == 0) {
                 Session::put('fvstop_id', $fvstop_id);
-            }
-            else{
-                $fvstop_id = Session::get('fvstop_id');
             }
 
         }
@@ -146,9 +139,6 @@ class HomeController extends Controller
         if(Session::has('tvstop_id')) {
             if(Session::get('tvstop_id') == 0) {
                 Session::put('tvstop_id', $tvstop_id);
-            }
-            else{
-                $tvstop_id = Session::get('tvstop_id');
             }
 
         }
@@ -183,6 +173,8 @@ class HomeController extends Controller
         ];
 
         $wagons = DB::executeProcedureWithCursor('proc_get_voyage_wagons', $bindings);
+
+
         return view('home', compact('rep','date1','voyages1','voyage1','tar','to','fr','tos','frs','dates','wagons','fvstop_id','tvstop_id',
             'stations', 'voyagesaleid', 'wid'));
     }
@@ -201,6 +193,7 @@ class HomeController extends Controller
     }
     public function filter_tr_voyage($voyage1,$fvstop_id,$tvstop_id) {
         Session::put('voyage1',$voyage1);
+
         Session::put('fvstop_id',$fvstop_id);
         Session::put('tvstop_id',$tvstop_id);
         return redirect('home');

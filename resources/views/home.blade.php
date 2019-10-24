@@ -52,6 +52,7 @@
                             <?php $text5 = ''; ?>
                             <?php $text6 = ''; ?>
                             <?php $text7 = ''; ?>
+
                             <select class="form-control" id="voyage1" name="voyage1" onchange="javascript:location.href = 'filter_tr_voyage/'+this.value;">
                                 @foreach ($voyages1 as $item1)
                                     <option value="{{ $item1->voyage_id }}/{{ $item1->fvstop_id }}/{{ $item1->tvstop_id }}" @if($item1->voyage_id==$voyage1) selected <?php $text5 = $item1->train_no.' '.$item1->train_name_mn; ?><?php $text6 = $item1->fvstop_id; ?><?php $text7 = $item1->tvstop_id; ?>  @endif>{{ $item1->train_no }} {{ $item1->train_name_mn }}</option>
