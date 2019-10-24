@@ -98,7 +98,7 @@ class HomeController extends Controller
 
         $voyages1 = DB::executeProcedureWithCursor('proc_find_voyage', $bind3);
 
-        if(sizeof($voyages1)>0) {
+        if(sizeof($voyages1)<2) {
 
             $first = $voyages1[0]->voyage_id;
             $fvfirst = $voyages1[0]->fvstop_id;
@@ -109,9 +109,10 @@ class HomeController extends Controller
 
         }
         else{
-
+            $voyage1 = Session::get('voyage1');
+            $tvstop_id = Session::get('tvstop_id');
+            $fvstop_id = Session::get('fvstop_id');
         }
-
         $wid = 0;
 
         if(Session::has('voyage1')) {
