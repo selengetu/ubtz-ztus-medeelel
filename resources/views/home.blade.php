@@ -136,7 +136,7 @@
                                                     bg-danger
                     @endif
                                     progress-bar-success
-                                     progress-bar-striped" role="progressbar" aria-valuenow="{{100*$item->filled/$item->totalmest}}" aria-valuemin="0" aria-valuemax="100" style="width:{{100*$item->filled/$item->totalmest}}%">{{number_format(100*$item->filled/$item->totalmest)}}%  </div></div></a></td>
+                                     progress-bar-striped" role="progressbar" aria-valuenow="{{100*$item->filled/$item->totalmest}}" aria-valuemin="0" aria-valuemax="100" style="width:{{100*$item->filled/$item->totalmest}}%">{{$item->filled}}/{{$item->totalmest}}  </div></div></a></td>
                                 @endforeach</tr>
                             </tbody>
                         </table>
@@ -179,17 +179,17 @@
             console.log('getwagonmests/'+wid+'/'+stop1+'/'+stop2+'/'+voyagesaleid);
             $.get('getwagonmests/'+wid+'/'+stop1+'/'+stop2+'/'+voyagesaleid).done(function (data) {
                 console.log(data);
-                drawMests();
+                drawMests(data);
                 $('#pleaseWaitDialog').modal('hide');
             });
         }
         //wagon onchange
 
-        function drawMests() {
+        function drawMests(mests) {
             let container = $('#wagonMain');
             container.empty();
             //mestArray = [];
-            console.log(data.length);
+            console.log(mests.length);
             if (mests.length==36){
                 container.append("<div class='wagon-start-container'><div class='wagon-start wagon-start-kupe'></div></div>");
                 for (var i=0; i<9; i++){
