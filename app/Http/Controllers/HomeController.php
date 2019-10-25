@@ -33,6 +33,9 @@ class HomeController extends Controller
         $frs = DB::executeProcedureWithCursor('get_from_stations', $bind);
         $date1 =date('Y-m-d');
 
+        $tvstop_id = 0;
+        $fvstop_id =0;
+        $voyage1 = 0;
         $fr = 37;
         $to = 19;
         if(Session::has('fr')) {
@@ -109,6 +112,7 @@ class HomeController extends Controller
 
         }
         else{
+
             $voyage1 = Session::get('voyage1');
             $tvstop_id = Session::get('tvstop_id');
             $fvstop_id = Session::get('fvstop_id');
@@ -117,7 +121,8 @@ class HomeController extends Controller
 
         if(Session::has('voyage1')) {
             if(Session::get('voyage1') == 0) {
-
+                $first = $voyages1[0]->voyage_id;
+                $voyage1 = $first;
                 Session::put('voyage1', $voyage1);
 
             }
@@ -128,7 +133,12 @@ class HomeController extends Controller
         }
 
         if(Session::has('fvstop_id')) {
+            if(Session::get('fvstop_id') == null) {
+                Session::put('fvstop_id', $fvstop_id);
+            }
             if(Session::get('fvstop_id') == 0) {
+                $fvfirst = $voyages1[0]->fvstop_id;
+                $fvstop_id = $fvfirst;
                 Session::put('fvstop_id', $fvstop_id);
             }
 
@@ -138,7 +148,12 @@ class HomeController extends Controller
             Session::put('fvstop_id', $fvstop_id);
         }
         if(Session::has('tvstop_id')) {
+            if(Session::get('tvstop_id') == null) {
+                Session::put('tvstop_id', $tvstop_id);
+            }
             if(Session::get('tvstop_id') == 0) {
+                $tvfirst = $voyages1[0]->tvstop_id;
+                $tvstop_id = $tvfirst;
                 Session::put('tvstop_id', $tvstop_id);
             }
 
@@ -163,7 +178,6 @@ class HomeController extends Controller
             'p_tstop_id'  => $tvstop_id,
 
         ];
-
         $tar = DB::executeProcedureWithCursor('proc_get_voyage_wagon_info', $bindings1);
         $bindings = [
             'p_pos_id' => 54,
