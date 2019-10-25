@@ -36,6 +36,7 @@ class HomeController extends Controller
         $tvstop_id = 0;
         $fvstop_id =0;
         $voyage1 = 0;
+
         $fr = 37;
         $to = 19;
         if(Session::has('fr')) {
@@ -120,20 +121,32 @@ class HomeController extends Controller
         $wid = 0;
 
         if(Session::has('voyage1')) {
+            if(Session::get('voyage1') == null) {
+                $first = $voyages1[0]->voyage_id;
+                $voyage1 = $first;
+                Session::put('voyage1', $voyage1);
+
+            }
             if(Session::get('voyage1') == 0) {
                 $first = $voyages1[0]->voyage_id;
                 $voyage1 = $first;
                 Session::put('voyage1', $voyage1);
 
             }
-
+            else{
+                Session::put('voyage1', $voyage1);
+            }
         }
         else {
+            $first = $voyages1[0]->voyage_id;
+            $voyage1 = $first;
             Session::put('voyage1', $voyage1);
         }
 
         if(Session::has('fvstop_id')) {
             if(Session::get('fvstop_id') == null) {
+                $fvfirst = $voyages1[0]->fvstop_id;
+                $fvstop_id = $fvfirst;
                 Session::put('fvstop_id', $fvstop_id);
             }
             if(Session::get('fvstop_id') == 0) {
@@ -142,13 +155,22 @@ class HomeController extends Controller
                 Session::put('fvstop_id', $fvstop_id);
             }
 
+            else {
+                $fvfirst = $voyages1[0]->fvstop_id;
+                $fvstop_id = $fvfirst;
+                Session::put('fvstop_id', $fvstop_id);
+            }
         }
 
         else {
+            $fvfirst = $voyages1[0]->fvstop_id;
+            $fvstop_id = $fvfirst;
             Session::put('fvstop_id', $fvstop_id);
         }
         if(Session::has('tvstop_id')) {
             if(Session::get('tvstop_id') == null) {
+                $tvfirst = $voyages1[0]->tvstop_id;
+                $tvstop_id = $tvfirst;
                 Session::put('tvstop_id', $tvstop_id);
             }
             if(Session::get('tvstop_id') == 0) {
@@ -160,6 +182,8 @@ class HomeController extends Controller
         }
 
         else {
+            $tvfirst = $voyages1[0]->tvstop_id;
+            $tvstop_id = $tvfirst;
             Session::put('tvstop_id', $tvstop_id);
         }
 
