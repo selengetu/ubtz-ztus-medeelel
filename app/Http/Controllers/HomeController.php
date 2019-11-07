@@ -59,20 +59,23 @@ class HomeController extends Controller
         $tos = DB::executeProcedureWithCursor('get_to_stations', $bind1);
 
         $bind2 = [
+            'p_pos' => 54,
             'p_fromstid'  => $fr,
             'p_tostid'  => $to,
             'p_saleid' => 0,
         ];
-        $dates = DB::executeProcedureWithCursor('proc_find_voyagedates', $bind2);
+        $dates = DB::executeProcedureWithCursor('proc_find_voyagedates_v2', $bind2);
         if(sizeof($dates)== 0) {
             $fr = 37;
             $to = 19;
             $bind2 = [
+                'p_pos' => 54,
                 'p_fromstid'  => $fr,
                 'p_tostid'  => $to,
                 'p_saleid' => 0,
+
             ];
-            $dates = DB::executeProcedureWithCursor('proc_find_voyagedates', $bind2);
+            $dates = DB::executeProcedureWithCursor('proc_find_voyagedates_v2', $bind2);
         }
         if(sizeof($dates)> 0) {
 
